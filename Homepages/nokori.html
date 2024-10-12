@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>しょーもない道具箱</title>
+    <meta name="description" content="すごく暇つぶしのツールを出してるさいと。">
+    <meta name="keywords" content="とみー,暇つぶし">
+    <meta name="robots" content="index, follow">
+    <link rel="app-touch-icon" href="images/logo.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/logo.png" type="image/x-icon"> <!-- ファビコンの追加 -->
+<head prefix="og:https://ogp.me/ns#">
+    <meta property="og:title" content="しょーもない道具箱ツールリスト">
+    <meta property="og:description" content="しょーもない暇つぶしツールとかだしているさいと。">
+    <meta property="og:url" content="https://shoumonaitools.pages.dev/">
+    <meta property="og:image" content="https://shoumonaitools.pages.dev/images/logo.png">
+    <meta property="og:site_name" content="しょーもない道具箱">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="しょーもない道具箱">
+    <meta name="twitter:description" content="しょーもない暇つぶしツールとかだしているさいと。">
+    <meta name="twitter:image" content="https://shoumonaitool.pages.dev/images/logo.png">
+    <style>
+.top{
+    text-align: center;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="images/logo.png" alt="Logo" class="logo">
+            <div class="nocolorlink"><a href="nokori.html" rel="noopener noreferrer"><h1>1年の終わりまでタイマー</h1></a></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html"  rel="noopener noreferrer">ホーム</a></li>
+                    <li><a href="tools.html" rel="noopener noreferrer" >つーるおきば</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <br><br>
+    <section id="nokori">
+     <div class="top">
+      <h1>👇次の年まで...👇</h1>
+      <h2 id="countdown"></h2>  
+     </div>
+    </section>
+  <script>    // 目標日時をセットする
+    const targetDate = new Date('2025-01-01T00:00:00').getTime();
+
+    function updateCountdown() {
+      // 現在の日時を取得
+      const now = new Date().getTime();
+      
+      // 残り時間を計算
+      const timeLeft = targetDate - now;
+
+      // 残り時間を日、時間、分、秒に変換
+      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+      // 結果を表示
+      document.getElementById("countdown").innerHTML = `${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
+    }
+
+    // 1秒ごとに残り時間を更新
+    setInterval(updateCountdown, 1000);
+
+    // 最初の表示を行う
+    updateCountdown();</script>
+    <footer>
+        <p>
+            &copy; 2024 TOOLS SHOUMONAI<br><a href="https://www.youtube.com/channel/UCKG8x3kgEXAefSenOpFQj7Q/" rel="noopener noreferrer"><img src="images/image2.png" alt="Youtubelogo"></a> <a href="https://discord.gg/dtnPphHbpT" rel="noopener noreferrer"><img src="images/image3.png" alt="discordlogo"></a>
+        </p>
+    </footer>
+
+</body>
+</html>

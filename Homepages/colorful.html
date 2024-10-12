@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>しょーもない道具箱つーるおきば</title>
+    <meta name="description" content="すごく暇つぶしのツールを出してるさいと。">
+    <meta name="keywords" content="とみー,暇つぶし">
+    <meta name="robots" content="index, follow">
+    <link rel="app-touch-icon" href="images/logo.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/logo.png" type="image/x-icon"> <!-- ファビコンの追加 -->
+    <meta property="og:title" content="しょーもない道具箱目壊し">
+    <meta property="og:description" content="しょーもない暇つぶしツールとかだしているさいと。">
+    <meta property="og:url" content="https://shoumonaitools.pages.dev/">
+    <meta property="og:image" content="https://shoumonaitools.pages.dev/images/logo.png">
+    <meta property="og:site_name" content="しょーもない道具箱">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="しょーもない道具箱">
+    <meta name="twitter:description" content="しょーもない暇つぶしツールとかだしているさいと。">
+    <meta name="twitter:image" content="https://shoumonaitool.pages.dev/images/logo.png">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        #screen {
+            width: 100%;
+            height: 100%;
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="images/logo.png" alt="Logo" class="logo">
+            <div class="nocolorlink"><a href="colorful.html" rel="noopener noreferrer"><h1>画面焼け直し（目壊すやつ）</h1></a></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html"  rel="noopener noreferrer">ホーム</a></li>
+                    <li><a href="tools.html" rel="noopener noreferrer" >つーるおきば</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <br><br>
+    <div id="screen"></div>
+
+    <script>
+        function randomColor() {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        function refreshScreen() {
+            const screen = document.getElementById('screen');
+            screen.style.backgroundColor = randomColor();
+        }
+
+        // 画面を1秒ごとにリフレッシュ
+        setInterval(refreshScreen, 10);
+    </script>
+    <footer>
+        <p>
+            &copy; 2024 TOOLS SHOUMONAI<br><a href="https://www.youtube.com/channel/UCKG8x3kgEXAefSenOpFQj7Q/" rel="noopener noreferrer"><img src="images/image2.png" alt="Youtubelogo"></a> <a href="https://discord.gg/dtnPphHbpT" rel="noopener noreferrer"><img src="images/image3.png" alt="discordlogo"></a>
+        </p>
+    </footer>
+
+</body>
+</html>
