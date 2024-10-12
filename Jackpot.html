@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>しょーもない道具箱つーるおきば</title>
+    <meta name="description" content="すごく暇つぶしのツールを出してるさいと。">
+    <meta name="keywords" content="とみー,暇つぶし">
+    <meta name="robots" content="index, follow">
+    <link rel="app-touch-icon" href="images/logo.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/logo.png" type="image/x-icon"> <!-- ファビコンの追加 -->
+<head prefix="og:https://ogp.me/ns#">
+    <meta property="og:title" content="しょーもない道具箱ツールリスト">
+    <meta property="og:description" content="しょーもない暇つぶしツールとかだしているさいと。">
+    <meta property="og:url" content="https://shoumonaitools.pages.dev/">
+    <meta property="og:image" content="https://shoumonaitools.pages.dev/images/logo.png">
+    <meta property="og:site_name" content="しょーもない道具箱">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="しょーもない道具箱">
+    <meta name="twitter:description" content="しょーもない暇つぶしツールとかだしているさいと。">
+    <meta name="twitter:image" content="https://shoumonaitool.pages.dev/images/logo.png">
+    <style>
+        .top{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="images/logo.png" alt="Logo" class="logo">
+            <div class="nocolorlink"><a href="Jackpot.html" ><h1>沼ジャックポット</h1></a></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html"  >ホーム</a></li>
+                    <li><a href="tools.html" rel="noopener noreferrer" >つーるおきば</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <br><br><br><br><br><br>
+    <div class="top"><h1>沼ジャックポット</h1>
+    <p>回数を指定して十億分の一の確率でジャックポットを狙え！</p>
+    
+    <!-- 挑戦回数入力 -->
+    <label for="tries">挑戦回数を入力してください:</label>
+    <input type="number" id="tries" value="1" min="1" max="100000000">
+    <br>
+    <button onclick="startJackpot()">チャレンジ開始</button>
+    <button onclick="resetTotalPlays()">累計リセット</button> <!-- リセットボタン追加 -->
+
+    <div id="result"></div>
+    
+    <!-- 累計ジャックポットプレイ回数の表示 -->
+    <p>累計プレイ回数: <span id="totalPlays">0</span></p>
+
+    <br><br><br><br><br><br><br><br><br><br><p>みんなはジャックポット当たるかな？</p>
+    </div>
+    <script>
+        // ローカルストレージから累計プレイ回数を取得
+        let totalPlays = localStorage.getItem('totalPlays');
+        if (!totalPlays) {
+            totalPlays = 0;
+        } else {
+            totalPlays = parseInt(totalPlays);
+        }
+
+        // 累計プレイ回数を表示
+        document.getElementById('totalPlays').innerText = totalPlays;
+
+        function startJackpot() {
+            const tries = document.getElementById('tries').value;
+            let attempts = parseInt(tries);
+            let jackpotHit = false;
+            const resultElement = document.getElementById('result');
+            resultElement.innerHTML = ''; // 結果エリアをリセット
+
+            // 1回の挑戦でかかる金額（100円）
+            const costPerTry = 100;
+            let jackpotMessage = '';
+
+            for (let currentAttempt = 1; currentAttempt <= attempts; currentAttempt++) {
+                // 累計挑戦回数に基づいて確率を調整
+                const adjustedOdds = 1000000000 - totalPlays;
+                const randomNumber = Math.floor(Math.random() * adjustedOdds) + 1;
+
+                if (randomNumber === 1) {
+                    // 当選時のメッセージと累計挑戦費用が当選金額になる
+                    const totalPrize = totalPlays * costPerTry; // 累計挑戦回数に基づいた当選金額
+                    jackpotMessage = `<p>試行 ${currentAttempt}: おめでとう！ジャックポットを当てた！</p>`;
+                    jackpotMessage += `<p>当選金額: ${totalPrize}円（累計挑戦費用: ${totalPlays * costPerTry}円）</p>`;
+                    resultElement.style.color = 'gold';
+                    jackpotHit = true;
+                    break; // ジャックポットが当たったらループを抜ける
+                }
+            }
+
+            if (!jackpotHit) {
+                resultElement.innerHTML = `<p>ジャックポットは当たりませんでした！合計挑戦費用: ${attempts * costPerTry}円</p>`;
+            } else {
+                resultElement.innerHTML = jackpotMessage;
+            }
+
+            // 累計プレイ回数を更新
+            totalPlays += attempts;
+            localStorage.setItem('totalPlays', totalPlays);
+            document.getElementById('totalPlays').innerText = totalPlays;
+        }
+
+        // 累計プレイ回数をリセットする関数
+        function resetTotalPlays() {
+            totalPlays = 0;
+            localStorage.setItem('totalPlays', totalPlays);
+            document.getElementById('totalPlays').innerText = totalPlays;
+        }
+    </script>
+    <footer>
+        <p>
+            &copy; 2024 TOOLS SHOUMONAI<br><a href="https://www.youtube.com/channel/UCKG8x3kgEXAefSenOpFQj7Q/" rel="noopener noreferrer"><img src="images/image2.png" alt="Youtubelogo"></a> <a href="https://discord.gg/dtnPphHbpT" rel="noopener noreferrer"><img src="images/image3.png" alt="discordlogo"></a>
+        </p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>しょーもない道具箱つーるおきば</title>
+    <meta name="description" content="すごく暇つぶしのツールを出してるさいと。">
+    <meta name="keywords" content="とみー,暇つぶし">
+    <meta name="robots" content="index, follow">
+    <link rel="app-touch-icon" href="images/logo.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/logo.png" type="image/x-icon">
+<head prefix="og:https://ogp.me/ns#">
+    <meta property="og:title" content="しょーもない道具箱ツール:カウントダウンタイマー">
+    <meta property="og:description" content="しょーもない暇つぶしツールとかだしているさいと。">
+    <meta property="og:url" content="https://shoumonaitools.pages.dev/">
+    <meta property="og:image" content="https://shoumonaitools.pages.dev/images/logo.png">
+    <meta property="og:site_name" content="しょーもない道具箱">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="しょーもない道具箱">
+    <meta name="twitter:description" content="しょーもない暇つぶしツールとかだしているさいと。">
+    <meta name="twitter:image" content="https://shoumonaitool.pages.dev/images/logo.png">
+    <style>
+        body, html {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .top {
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* ボタンのスタイル */
+        button {
+            background-color: #ff0000;
+            border: none;
+            color: rgb(0, 0, 0);
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #a04545;
+        }
+
+        /* タイマー表示のスタイル */
+        #countdown-display {
+            font-size: 36px;
+            margin-top: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="images/logo.png" alt="Logo" class="logo">
+            <div class="nocolorlink"><a href="nokori.html" rel="noopener noreferrer"><h1>カウントダウンタイマー</h1></a></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html"rel="noopener noreferrer">ホーム</a></li>
+                    <li><a href="tools.html" rel="noopener noreferrer" >つーるおきば</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <br><br><br><br><br><br><br><br>
+
+    <div class="top">
+        <h2>カウントダウンタイマー</h2>
+        <button onclick="openInputDialog()">時間を設定</button>
+        <button id="startBtn" onclick="startCountdown()" disabled>スタート</button>
+        <button id="resetBtn" onclick="resetCountdown()" disabled>リセット</button>
+
+        <div id="countdown-display" class="hidden"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 TOOLS SHOUMONAI<br><a href="https://www.youtube.com/channel/UCKG8x3kgEXAefSenOpFQj7Q/" rel="noopener noreferrer"><img src="images/image2.png" alt="Youtubelogo"></a> <a href="https://discord.gg/dtnPphHbpT" rel="noopener noreferrer"><img src="images/image3.png" alt="discordlogo"></a></p>
+    </footer>
+
+    <script>
+        let countdownInterval;
+        let timeLeft = 0;
+        let initialTime = 0;  // リセット時のために初期時間を保存
+        let isPaused = false; // 一時停止状態を追跡
+
+        function openInputDialog() {
+            // 分と秒を入力するダイアログを表示
+            const minutes = prompt("分を入力してください:", "0");
+            const seconds = prompt("秒を入力してください:", "10");
+
+            if (minutes === null || seconds === null) {
+                return; // キャンセルされた場合は何もしない
+            }
+
+            const totalSeconds = parseInt(minutes) * 60 + parseFloat(seconds);
+
+            if (isNaN(totalSeconds) || totalSeconds <= 0) {
+                alert('有効な時間を入力してください。');
+            } else {
+                initialTime = totalSeconds;
+                timeLeft = totalSeconds;
+                document.getElementById('countdown-display').textContent = timeLeft.toFixed(2) + ' 秒';
+                document.getElementById('countdown-display').classList.remove('hidden');
+                
+                // ボタンを有効化
+                document.getElementById('startBtn').disabled = false;
+                document.getElementById('resetBtn').disabled = false;
+            }
+        }
+
+        function startCountdown() {
+            if (isPaused) {
+                // 一時停止中ならそのまま再開
+                isPaused = false;
+            } else {
+                // 初回またはリセット後の場合
+                clearInterval(countdownInterval);
+                countdownInterval = setInterval(updateCountdown, 100);
+            }
+
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('stopBtn').disabled = false;
+        }
+
+        function stopCountdown() {
+            clearInterval(countdownInterval);
+            isPaused = true;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('stopBtn').disabled = true;
+        }
+
+        function resetCountdown() {
+            clearInterval(countdownInterval);
+            timeLeft = initialTime;
+            document.getElementById('countdown-display').textContent = timeLeft.toFixed(2) + ' 秒';
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('stopBtn').disabled = true;
+        }
+
+        function updateCountdown() {
+            timeLeft -= 0.1; // 0.1秒ずつ減らす
+            if (timeLeft <= 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('countdown-display').textContent = 'うあ！もう時間切れ！';
+                document.getElementById('startBtn').disabled = true;
+                document.getElementById('stopBtn').disabled = true;
+                document.getElementById('resetBtn').disabled = false;
+            } else {
+                document.getElementById('countdown-display').textContent = timeLeft.toFixed(2) + ' 秒'; // 小数点2桁まで表示
+            }
+        }
+    </script>
+</body>
+</html>
